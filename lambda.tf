@@ -1,5 +1,5 @@
 locals {
-  lambda_function_name    = "${var.site_name}-lambda-edge-rewrite"
+  lambda_function_name    = "${local.site_fqdn_safe}-lambda-edge-rewrite"
   lambda_function_payload = "${path.module}/lambda_payload.zip"
 }
 
@@ -58,7 +58,7 @@ resource "aws_cloudwatch_log_group" "lambda_edge_rewrite" {
 }
 
 resource "aws_iam_policy" "lambda_logging" {
-  name        = "${var.site_name}-lambda-rewrite-logging"
+  name        = "${var.site_fqdn_safe}-lambda-rewrite-logging"
   path        = "/"
   description = "IAM policy for logging from a lambda"
 
