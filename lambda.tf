@@ -58,7 +58,7 @@ resource "aws_cloudwatch_log_group" "lambda_edge_rewrite" {
 }
 
 resource "aws_iam_policy" "lambda_logging" {
-  name        = "${var.site_fqdn_safe}-lambda-rewrite-logging"
+  name        = "${local.site_fqdn_safe}-lambda-rewrite-logging"
   path        = "/"
   description = "IAM policy for logging from a lambda"
 
