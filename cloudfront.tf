@@ -1,5 +1,5 @@
 locals {
-  cf_aliases_list = var.site_subdomain == "www" ? [local.site_fqdn, var.site_domain] : [local.site_fqdn]
+  cf_aliases_list = var.site_name == "www" ? [local.site_fqdn, var.domain] : [local.site_fqdn]
 }
 
 resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
