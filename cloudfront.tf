@@ -1,3 +1,7 @@
+locals {
+  cf_aliases_list = var.site_subdomain == "www" ? [local.site_fqdn, var.site_domain] : [local.site_fqdn]
+}
+
 resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
   comment = "${local.site_fqdn} Created by Terraform"
 }
@@ -16,7 +20,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   comment             = "Created by terraform, dont edit manually!!"
   default_root_object = "index.html"
 
-  aliases = ["${local.site_fqdn}"]
+  aliases = local.cf_aliases_list
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
