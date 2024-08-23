@@ -14,8 +14,6 @@ variable "site_name" {
   description = "Site subdomain name"
 }
 
-variable "public_dns_zone" {}
-
 variable "ssl_cert" {
   default = ""
 }
