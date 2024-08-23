@@ -1,7 +1,3 @@
-locals {
-  cf_aliases_list = var.site_name == "www" ? [local.site_fqdn, var.domain] : [local.site_fqdn]
-}
-
 resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
   comment = "${local.site_fqdn} Created by Terraform"
 }

@@ -1,14 +1,3 @@
-locals {
-  lambda_function_name    = "${local.site_fqdn_safe}-lambda-edge-rewrite"
-  lambda_function_payload = "${path.module}/lambda_payload.zip"
-}
-
-data "archive_file" "init" {
-  type        = "zip"
-  source_file = "${path.module}/lambda/edge_rewrite/rewrite.js"
-  output_path = local.lambda_function_payload
-}
-
 resource "aws_lambda_function" "lambda_edge_rewrite" {
   publish  = true
 

@@ -1,7 +1,18 @@
-// Gral variables
-variable "domain" {}
+variable "artifact_dir" {
+  type        = string
+  description = "Local directory that contains the static site files"
+  default     = "./dist"
+}
 
-variable "site_name" {}
+variable "site_domain" {
+  type        = string
+  description = "Site domain name"
+}
+
+variable "site_name" {
+  type        = string
+  description = "Site subdomain name"
+}
 
 variable "public_dns_zone" {}
 
