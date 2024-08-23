@@ -26,7 +26,7 @@ resource "aws_s3_bucket_acl" "main" {
 
 module "template_files" {
   source   = "hashicorp/dir/template"
-  base_dir = "${path.module}/${var.artifact_dir}"
+  base_dir = var.artifact_dir
 }
 
 resource "aws_s3_object" "static_files" {
