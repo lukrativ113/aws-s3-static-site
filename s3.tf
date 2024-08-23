@@ -1,10 +1,27 @@
 resource "aws_s3_bucket" "main" {
   bucket = local.site_fqdn_safe
-  policy = "${data.aws_iam_policy_document.s3_policy.json}"
+  tags   = var.extra_tags
+}
 
-  acl = "private"
+resource "aws_s3_bucket_policy" "basic" {
+  bucket = aws_s3_bucket.main.id
+  policy = data.aws_iam_policy_document.s3_policy.json
+}
 
-  tags = var.extra_tags
+resource "aws_s3_bucket_ownership_controls" "main" {
+  bucket = aws_s3_bucket.main.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_acl" "main" {
+  bucket = aws_s3_bucket.main.id
+  acl    = "private"
+
+  depends_on = [
+    aws_s3_bucket_ownership_controls.main
+  ]
 }
 
 module "template_files" {
@@ -12,7 +29,7 @@ module "template_files" {
   base_dir = "${path.module}/${var.artifact_dir}"
 }
 
-resource "aws_s3_bucket_object" "static_files" {
+resource "aws_s3_object" "static_files" {
   for_each = module.template_files.files
 
   bucket       = aws_s3_bucket.main.id
@@ -28,8 +45,4 @@ resource "aws_s3_bucket_object" "static_files" {
   # Unless the bucket has encryption enabled, the ETag of each object is an
   # MD5 hash of that object.
   etag = each.value.digests.md5
-
-  depends_on = [
-    aws_s3_bucket.main.id
-  ]
 }

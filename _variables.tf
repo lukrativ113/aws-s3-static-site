@@ -11,7 +11,7 @@ variable "site_domain" {
 
 variable "site_name" {
   type        = string
-  description = "Site subdomain name"
+  description = "Site name, used for subdomain"
 }
 
 variable "ssl_cert" {

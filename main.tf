@@ -5,9 +5,9 @@ resource "aws_s3_bucket_policy" "s3_policy_main" {
 
 # Add record on DNS for minion instance
 resource "aws_route53_record" "site_root" {
-  count   = var.site_name == "www" ? 0 : 1
+  count   = var.site_name != "www" ? 0 : 1
   zone_id = data.aws_route53_zone.hz.id
-  name    = var.domain
+  name    = var.site_domain
   type    = "A"
 
   alias {

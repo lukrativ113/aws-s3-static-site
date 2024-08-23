@@ -6,7 +6,7 @@ resource "aws_lambda_function" "lambda_edge_rewrite" {
   role          = aws_iam_role.lambda_rewrite.arn
   handler       = "rewrite.handler"
 
-  runtime = "nodejs12.x"
+  runtime = "nodejs20.x"
 
   depends_on = [
     aws_iam_role_policy_attachment.lambda_logs,
