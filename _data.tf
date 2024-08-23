@@ -4,6 +4,11 @@ data "archive_file" "init" {
   output_path = local.lambda_function_payload
 }
 
+data "aws_route53_zone" "hz" {
+  name         = var.site_domain
+  private_zone = false
+}
+
 // Global Content Delivery Network
 // S3 + Cloudfront
 // Content of this bucket will be populated manually
